@@ -117,11 +117,25 @@ def create_fornecedores(con_destino, fornecedor):
 def create_produtos(con_destino, con_origem, produto):
     with con_destino.cursor() as cursor:
         #CADASTRANDO MARCA
-        cursor.execute("INSERT INTO marca (descricao) VALUES (%s)", (produto[2]))
-        id_marca = con_destino.insert_id()
+        cursor.execute("SELECT * FROM marca WHERE descricao = %s", (produto[2]))
+        marca = cursor.fetchone()
+        if not marca:
+            cursor.execute("INSERT INTO marca (descricao) VALUES (%s)", (produto[2]))
+            id_marca = con_destino.insert_id()
+        else:
+            id_marca = marca[0]
+
         #CADASTRANDO MODELO
-        cursor.execute("INSERT INTO modelo (descricao, id_marca) VALUES (%s, %s)", (produto[3], id_marca))
-        id_modelo = con_destino.insert_id()
+        print('========== MODELO =========')
+        print(produto[3])
+        cursor.execute("SELECT * FROM modelo WHERE descricao = %s", (produto[3]))
+        modelo = cursor.fetchone()
+        if not modelo:
+            cursor.execute("INSERT INTO modelo (descricao, id_marca) VALUES (%s, %s)", (produto[3], id_marca))
+            id_modelo = con_destino.insert_id()
+        else:
+            id_modelo = modelo[0]
+
         #CADASTRANDO CATEGORIA
         id_categoria = 0
         if produto[13] in CATEGORIAS:
