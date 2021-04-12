@@ -2,7 +2,6 @@ from Service import AntenaImporterService
 
 
 def main():
-
-    AntenaImporterService.importar()
+    AntenaImporterService().importar()
 
 main()
