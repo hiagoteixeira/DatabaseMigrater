@@ -105,6 +105,7 @@ class AntenaImporterService:
 
             # self.con.estoque.commit()
             self.con.estoque.rollback()
+            print('Processo finalizado com sucesso!')
 
         except Exception as e:
             self.con.estoque.rollback()
