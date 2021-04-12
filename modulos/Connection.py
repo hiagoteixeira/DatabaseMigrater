@@ -7,7 +7,7 @@ class Connection:
         self.integra = self.connection_integra()
 
     def connection_integra(self):
-        return pymysql.connect(user='hiago', password='hwSrr8sC',database='integra', host='10.0.1.26')
+        return pymysql.connect(user='', password='',database='', host='')
 
 
     def connection_estoque(self):
