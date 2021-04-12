@@ -1,4 +1,4 @@
-from . import Connection
+from modulos.Connection import Connection
 
 
 class Provider:

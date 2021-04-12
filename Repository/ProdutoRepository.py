@@ -1,5 +1,5 @@
-from Models import Produto
-from modulos import Connection
+from Models.Produto import Produto
+from modulos.Connection import Connection
 
 
 class ProdutoRepository:

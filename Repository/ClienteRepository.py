@@ -1,5 +1,5 @@
-from Models import Cliente
-from modulos import Connection
+from Models.Cliente import Cliente
+from modulos.Connection import Connection
 
 
 class ClienteRepository:

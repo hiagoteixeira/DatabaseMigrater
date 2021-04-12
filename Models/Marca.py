@@ -1,7 +1,7 @@
 class Marca:
 
-    def __init__(self):
+    def __init__(self, id, descricao):
         
-        self.id
-        self.descricao
+        self.id = id
+        self.descricao = descricao
         

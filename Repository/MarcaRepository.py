@@ -1,5 +1,5 @@
-from . import Connection
-from Models import Marca
+from modulos.Connection import Connection
+from Models.Marca import Marca
 
 class MarcaRepository:
     def __init__(self):
@@ -12,7 +12,7 @@ class MarcaRepository:
         result = self.get_by_description(description)
         if not result:
             return False
-        else 
+        else:
             return True
 
 
@@ -25,10 +25,12 @@ class MarcaRepository:
         return marca
 
     def get_by_description(self, description):
-
+        print('Iniciando busca da marca pela descricao')
         cur = self.con.estoque.cursor()
         cur.execute("select * from marca where descricao = %s", (description) )
         data_marca = cur.fetchone()
         cur.close()
+        print('data_marca ==>', data_marca)
         marca = Marca(data_marca[0], data_marca[1])
+        print(marca)
         return marca

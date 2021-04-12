@@ -1,7 +1,12 @@
-from Service import AntenaImporterService
+from Service.AntenaImporterService import AntenaImporterService
+# from Repository.ItemRepository import ItemRepository
 
 
 def main():
-    AntenaImporterService().importar()
+    antenaImporterService = AntenaImporterService()
+    antenaImporterService.importar()
+    # itemRepository = ItemRepository()
+    # itemRepository.get_by_serie(200005)
+    
 
 main()

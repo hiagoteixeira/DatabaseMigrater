@@ -1,5 +1,5 @@
-from modulos import Connection
-from Models import Modelo
+from modulos.Connection import Connection
+from Models.Modelo import Modelo
 
 
 class ModeloRepository:
@@ -14,7 +14,7 @@ class ModeloRepository:
         modelo = self.get_by_description(param)
         if not modelo:
             return False
-        else
+        else:
             return True 
 
 
