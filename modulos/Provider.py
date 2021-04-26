@@ -37,3 +37,12 @@ class Provider:
         cliente = cur.fetchone()
         cur.close()
         return cliente
+
+    def get_all_presets(self):
+        
+        cur = self.con.integra.cursor()
+        cur.execute("select	serie, login_pppoe, senha_pppoe from produto_estoque as item join produto as p on p.id = item.id_produto join produto_categoria as c on c.id = p.categoria where c.id in (3,21) AND login_pppoe is not null;")
+        itens = cur.fetchall()
+        cur.close()
+        return itens
+        

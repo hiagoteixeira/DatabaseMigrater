@@ -1,12 +1,9 @@
 from Service.AntenaImporterService import AntenaImporterService
 # from Repository.ItemRepository import ItemRepository
-
+from Service.ItemService import ItemService
 
 def main():
-    antenaImporterService = AntenaImporterService()
-    antenaImporterService.importar()
-    # itemRepository = ItemRepository()
-    # itemRepository.get_by_serie(200005)
-    
+   item_service = ItemService()
+   item_service.fix_pppoe()
 
 main()

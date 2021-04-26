@@ -36,3 +36,11 @@ class ItemRepository:
         id_item = self.con.estoque.insert_id()
         item = Item(id_item, params[0], params[1], params[2], params[3], params[4], params[5], params[6], params[7])
         return item
+    
+    def update_pppoe(self, item):
+        cur = self.con.estoque.cursor()
+        print("Executando Query.")
+        cur.execute("update item set login_pppoe = %s, senha_pppoe = %s where serie = %s", (item[1], item[2], item[0]))
+        print("Item n° Serie: ", item[0], " atualizado.")
+        cur.close()
+        return 

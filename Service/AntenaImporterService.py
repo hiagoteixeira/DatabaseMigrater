@@ -103,8 +103,8 @@ class AntenaImporterService:
                         data_item = (item_customer[0], item_customer[1], 'A', produtoItem.id, item_customer[2], item_customer[3], None, None)
                         item_new = self.itemRepository.insert(data_item)
 
-            # self.con.estoque.commit()
-            self.con.estoque.rollback()
+            self.con.estoque.commit()
+            # self.con.estoque.rollback()
             print('Processo finalizado com sucesso!')
 
         except Exception as e:
