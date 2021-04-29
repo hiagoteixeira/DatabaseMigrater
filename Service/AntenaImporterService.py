@@ -25,11 +25,12 @@ class AntenaImporterService:
             print('Getting antenas.')
             antenas = self.provider.get_antenas()
             for antena in antenas:
+                print("INICIO")
                 ## Verifying marca antena[3]
-                print('Marcas')
+                print('Marca =>', antena[3])
                 marca = self.marcaRepository.get_by_description(antena[3]) 
                 if not marca:
-                    print('Inserindo Marcas')
+                    print('Marca não Existe')
                     marca = self.marcaRepository.insert(antena[3])
                     id_marca = marca.id
                 else:
@@ -40,8 +41,8 @@ class AntenaImporterService:
                 print('Modelos')
                 modelo = self.modeloRepository.get_by_description(antena[4])
                 if not modelo:
-                    print('Inserindo Modelo')
-                    modelo = self.modeloRepository.insert(antena[4])
+                    data_modelo = [antena[4], id_marca]
+                    modelo = self.modeloRepository.insert(data_modelo)
                     id_modelo = modelo.id
                 else:
                     print('Modelo já Existe <====')
@@ -51,8 +52,8 @@ class AntenaImporterService:
                 print('Produtos')
                 produto = self.produtoRepository.get_by_modelo(id_modelo)
                 if not produto:
-                    print('Inserindo Produto')
-                    data_produto = (id_modelo, 'UN', antena[9], 0)
+                    print(antena[9])
+                    data_produto = (id_modelo, 'UN', antena[9], 0, 10, 'A', 0, None, None, None, None)
                     produto = self.produtoRepository.insert(data_produto)
                     id_produto = produto.id
                 else:
@@ -83,17 +84,21 @@ class AntenaImporterService:
                 for item_customer in itens_customers:
                     print('Verificando se Item existe')
                     item_customer_exists = self.itemRepository.get_by_serie(item_customer[0])
+                    print("Ok")
                     if not item_customer_exists:
                         ## verifying if the customer exists
                         print('Verificando se o cliente existe')
                         cliente = self.clienteRepository.get_by_login(item_customer[4])
-                        id_cliente = cliente.id
 
                         if not cliente:
                             print('Inserindo Cliente')
                             cliente_provider = self.provider.get_cliente_by_login(item_customer[4])
-                            cliente_new = self.clienteRepository.insert(cliente_provider[0], cliente_provider[1], cliente_provider[2], cliente_provider[3], 'A', cliente_provider[4])
+                            data_cliente = (cliente_provider[0], cliente_provider[1], cliente_provider[2], cliente_provider[3], 'A', cliente_provider[4])
+                            print(cliente_provider)
+                            cliente_new = self.clienteRepository.insert(data_cliente)
                             id_cliente = cliente_new.id
+                        else:
+                            id_cliente = cliente.id
 
                         data_pitem = (id_produto, None, 1, id_cliente)
                         print('Inserindo produtoItem')
@@ -102,11 +107,12 @@ class AntenaImporterService:
                         print('Inserindo Item')
                         data_item = (item_customer[0], item_customer[1], 'A', produtoItem.id, item_customer[2], item_customer[3], None, None)
                         item_new = self.itemRepository.insert(data_item)
-
+                    else:
+                        print(item_customer_exists.serie, " encontrado!")
             self.con.estoque.commit()
             # self.con.estoque.rollback()
             print('Processo finalizado com sucesso!')
 
         except Exception as e:
             self.con.estoque.rollback()
-            print("Error during the importation.")
+            print("Error during the importation => ", e)

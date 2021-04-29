@@ -24,4 +24,4 @@ class Connection:
 
 
     def connection_estoque(self):
-        return pymysql.connect(user='root', password='', database='estoque', host='')
+        return pymysql.connect(user='', password='', database='', host='')

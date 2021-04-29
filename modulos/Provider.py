@@ -1,4 +1,5 @@
 from modulos.Connection import Connection
+from Models.Item import Item
 
 
 class Provider:
@@ -12,7 +13,6 @@ class Provider:
         produtos = cur.fetchall()
         cur.close()
         return produtos
-    
 
     def get_itens(self, id_produto):
 
@@ -25,7 +25,7 @@ class Provider:
     def get_itens_cliente (self, id_produto):
 
         cur = self.con.integra.cursor()
-        cur.execute("SELECT pe.serie, pe.mac, pe.wifi, pe.senha, adesao.login, pe.status_produto FROM produto_estoque pe join adesao_equipamento adesao on adesao.serie = pe.serie where adesao.status = 'A' and adesao.tipo in ('onu', 'roteador-preset') and pe.status_produto in ('U') and pe.id_produto = %s", (id_produto))
+        cur.execute("SELECT pe.serie, pe.mac, pe.wifi, pe.senha, adesao.login, pe.status_produto FROM produto_estoque pe join adesao_equipamento adesao on adesao.serie = pe.serie where adesao.status = 'A' and pe.status_produto in ('U') and pe.id_produto = %s", (id_produto))
         itens_cliente = cur.fetchall()
         cur.close()
         return itens_cliente
@@ -33,7 +33,7 @@ class Provider:
     def get_cliente_by_login(self, login):
 
         cur = self.con.integra.cursor()
-        cur.execute("select nome, cpf, email, telefone1, login from operador where login = %s", (login))
+        cur.execute("select c.nome, c.cpfcnpj, c.email, t.telefone, a.login from clientes as c join adesao as a on a.cliente = c.id join telefones as t on t.id_cliente = c.id where a.login =  %s group by c.nome", (login))
         cliente = cur.fetchone()
         cur.close()
         return cliente
